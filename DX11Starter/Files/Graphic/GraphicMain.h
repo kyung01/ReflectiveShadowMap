@@ -139,7 +139,6 @@ namespace NGraphic {
 			ID3D11Device* device, ID3D11DeviceContext* context,
 			SimpleVertexShader& shaderVert, SimpleFragmentShader& shaderFrag,
 
-			RenderTexture& target, DepthTexture& targetDepth,
 			RenderTexture & directLight,
 			RenderTexture& indirectLight, 
 			std::unique_ptr<Mesh*> &meshePlane,
@@ -154,7 +153,8 @@ namespace NGraphic {
 			RenderTexture& textureNormal, RenderTexture&textureSpecular, DepthTexture& textureDepth,
 			std::unique_ptr<Mesh*> &meshePlane,
 			ID3D11SamplerState * samplerDefault,
-			ID3D11SamplerState * samplerLinear
+			ID3D11SamplerState * samplerLinear,
+			ID3D11SamplerState * samplerPouint
 		);
 		//void renderApplyRSMs(
 		//	ID3D11Device* device, ID3D11DeviceContext* context, NScene::Scene & scene,
@@ -191,10 +191,13 @@ namespace NGraphic {
 		GraphicMain();
 		bool init(
 			ID3D11Device *device, ID3D11DeviceContext *context, 
+		
+			int textureWidth, int textureHeight, int textureIndirectLightWidth, int textureIndirectLightHeight);
+		
+		void render(ID3D11Device * device , ID3D11DeviceContext* context,  Asset* asset, NScene::Scene scene);
+		void renderToScreen(ID3D11Device * device, ID3D11DeviceContext* context, Asset* asset,
 			ID3D11RenderTargetView* backBufferRTV,
 			ID3D11DepthStencilView* backBufferDepth,
-			D3D11_VIEWPORT backBufferViewPort,
-			int textureWidth, int textureHeight, int textureIndirectLightWidth, int textureIndirectLightHeight);
-		void render(ID3D11Device * device , ID3D11DeviceContext* context,  Asset* asset, NScene::Scene scene);
+			D3D11_VIEWPORT backBufferViewPort);
 	};
 }

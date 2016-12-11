@@ -168,19 +168,19 @@ bool Asset::init(ID3D11Device * device, ID3D11DeviceContext * context)
 	samplerDescLight.MinLOD = 0;
 	samplerDescLight.MaxLOD = D3D11_FLOAT32_MAX;
 
-	D3D11_SAMPLER_DESC samplerDescLightRMS = {};
-	samplerDescLightRMS.Filter = D3D11_FILTER_ANISOTROPIC;
+	D3D11_SAMPLER_DESC samplerDescBoarderZero = {};
+	samplerDescBoarderZero.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	//samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplerDescLightRMS.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
-	samplerDescLightRMS.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
-	samplerDescLightRMS.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	samplerDescLightRMS.BorderColor[0] = 0.0f;
-	samplerDescLightRMS.BorderColor[1] = 0.0f;
-	samplerDescLightRMS.BorderColor[2] = 0.0f;
-	samplerDescLightRMS.BorderColor[3] = 0.0f;
-	samplerDescLightRMS.MaxAnisotropy = 16;
-	samplerDescLightRMS.MinLOD = 0;
-	samplerDescLightRMS.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDescBoarderZero.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDescBoarderZero.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDescBoarderZero.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDescBoarderZero.BorderColor[0] = 0.0f;
+	samplerDescBoarderZero.BorderColor[1] = 0.0f;
+	samplerDescBoarderZero.BorderColor[2] = 0.0f;
+	samplerDescBoarderZero.BorderColor[3] = 0.0f;
+	samplerDescBoarderZero.MaxAnisotropy = 16;
+	samplerDescBoarderZero.MinLOD = 0;
+	samplerDescBoarderZero.MaxLOD = D3D11_FLOAT32_MAX;
 
 
 
@@ -189,7 +189,7 @@ bool Asset::init(ID3D11Device * device, ID3D11DeviceContext * context)
 	device->CreateSamplerState(&samplerDesc, &samplerClamp);
 	device->CreateSamplerState(&sampler_IDontKnow , &samplerLinear);
 	device->CreateSamplerState(&samplerDescLight, &samplerBorderOne);
-	device->CreateSamplerState(&samplerDescLightRMS, &samplerBorderZero);
+	device->CreateSamplerState(&samplerDescBoarderZero, &samplerBorderZero);
 	device->CreateSamplerState(&samplerDescPOINT, &samplerPoint);
 	m_samplers[SAMPLER_ID_WRAP] = samplerWrap;
 	m_samplers[SAMPLER_ID_CLAMP] = samplerClamp;

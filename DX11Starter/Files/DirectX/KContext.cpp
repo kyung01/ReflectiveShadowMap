@@ -66,7 +66,6 @@ void KContext::Init()
 
 
 		if (!it->main.init(this->device, this->context, 
-			this->backBufferRTV,this->backBufferDepth,this->backBufferViewPort,
 			this->width,this->height, 256,256)) {
 			std::cout << "GraphicMain failed to init" << std::endl;
 		}
@@ -102,6 +101,15 @@ void KContext::OnResize()
 {
 	// Handle base-level DX resize stuff
 	DXCore::OnResize();
+	for (auto it = m_renderContexts.begin(); it != m_renderContexts.end(); it++) {
+	
+
+		if (!it->main.init(this->device, this->context,
+			this->width, this->height, 256, 256)) {
+			std::cout << "GraphicMain failed to resize" << std::endl;
+		}
+	}
+
 	//for (auto it = m_renderContexts.begin(); it != m_renderContexts.end(); it++) {
 	//	it->main.m_width = width;
 	//	it->main.m_height = height;
@@ -186,7 +194,8 @@ void KContext::Draw(float deltaTime, float totalTime)
 	int count = 0;
 	
 	for (auto it = m_renderContexts.begin(); it != m_renderContexts.end(); it++) {
-		it->main.render(this->device, this->context,&m_asset, it->scene);
+		it->main.render(this->device, this->context, &m_asset, it->scene);
+		it->main.renderToScreen(this->device, this->context, &m_asset,backBufferRTV,backBufferDepth,backBufferViewPort);
 	}
 	context->OMSetRenderTargets(1,&this-> backBufferRTV, backBufferDepth);
 	m_ui.render();

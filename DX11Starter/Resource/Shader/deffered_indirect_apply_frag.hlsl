@@ -16,6 +16,7 @@ Texture2D textureLightDirect : register(t4);
 
 SamplerState samplerDefault	: register(s0);
 SamplerState samplerIndirectLight	: register(s1);
+SamplerState samplerPoint	: register(s2);
 
 struct VertexToPixel
 {
@@ -43,7 +44,7 @@ float getArea(float2 vertA, float2 vertB, float2 vertC) {
 	float s = 0.5* (a + b + c);
 	return sqrt(s*(s - a)*(s - b)*(s - c));
 }
-float4 linearFilter (float2 uv, float3 colors[4],float2 uvs[4], int checks[4]) {
+float4 barycentric(float2 uv, float3 colors[4],float2 uvs[4], int checks[4]) {
 	int count = 0;
 	for (int i = 0; i < 4; i++) {
 		if (checks[i] == -1) continue;
@@ -92,25 +93,29 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 	float posDiffTotal = 0;
 	for (int ii = 0; ii < 4; ii++) {
 		smaplingPositions[ii] = float2(
-			PIXEL_DISTANCE*floor(input.uv.x / PIXEL_DISTANCE) + smaplingPositions[ii].x,
+			//input.uv.x + smaplingPositions[ii].x,
+			//input.uv.y + smaplingPositions[ii].y);
+			PIXEL_DISTANCE*floor(input.uv.x / PIXEL_DISTANCE) + smaplingPositions[ii].x ,
 			PIXEL_DISTANCE*floor(input.uv.y / PIXEL_DISTANCE) + smaplingPositions[ii].y);
-		sampledColors[ii] = textureLightIndirect.Sample(samplerIndirectLight, smaplingPositions[ii]);// *(posDiff < 5 && dot(meNormal, otherNormal) > 0.5);
+		sampledColors[ii] = textureLightIndirect.Sample(samplerDefault, smaplingPositions[ii]);// *(posDiff < 5 && dot(meNormal, otherNormal) > 0.5);
 	}
 	//return textureLightIndirect.Sample(samplerIndirectLight, input.uv);
 	for (int i = 0; i < 4; i++) {
 
 
 		float2 uvRelative = float2(
-			PIXEL_DISTANCE*floor(smaplingPositions[i].x / PIXEL_DISTANCE)+ PIXEL_DISTANCE/2,
-			PIXEL_DISTANCE*floor(smaplingPositions[i].y / PIXEL_DISTANCE) + PIXEL_DISTANCE / 2
+			smaplingPositions[i].x + PIXEL_DISTANCE*0.5,
+			smaplingPositions[i].y + PIXEL_DISTANCE*0.5
 			);
+		//float2 uvRelative = float2(smaplingPositions[i].x, smaplingPositions[i].y
+		//	);
 		
 		//
-		float4 otherPosWorld = getPosWorld(uvRelative, textureDepth, matProjViewInverse, samplerDefault);
-		float3 otherNormal = normalize(textureNormal.Sample(samplerIndirectLight, uvRelative).xyz * 2 - 1);
+		float4 otherPosWorld = getPosWorld(uvRelative, textureDepth, matProjViewInverse, samplerPoint);
+		float3 otherNormal = normalize(textureNormal.Sample(samplerPoint, uvRelative).xyz * 2 - 1);
 		////posDiffTotal += length(otherPosWorld.xyz - posWorld.xyz);
 		float posDiff = 1 / (1+length(otherPosWorld.xyz - posWorld.xyz));
-		if (dot(meNormal, otherNormal) < 0.90 || length(otherPosWorld.xyz - posWorld.xyz) > 0.5) {
+		if (dot(meNormal, otherNormal) < 0.97 || length(otherPosWorld.xyz - posWorld.xyz) > 1.0) {
 			indexs[i] = -1;
 			failCount++;
 		}
@@ -147,8 +152,10 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 	}
 	else if (failCount == 1) {
 		//return float4(1, 0, 0, 1);
-		float4 color = linearFilter(input.uv, sampledColors, smaplingPositions, indexs);
+		float4 color = barycentric(input.uv, sampledColors, smaplingPositions, indexs);
 		output.color = float4(saturate(colorDirect + color.xyz *color.w), 1);
+		//if (color.z == 0)
+		//	output.color = float4(1, 0, 0, 1);
 		output.error = float4(color.w, 0, 1-color.w, 1.0);
 
 	}
