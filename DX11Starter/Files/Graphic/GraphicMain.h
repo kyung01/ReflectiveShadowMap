@@ -47,9 +47,9 @@ namespace NGraphic {
 		void rendering(NScene::Scene scene);
 		void processObject(NScene::Object obj);
 
-
+		void initBlendState(ID3D11Device *device);
 		bool initTextures		(ID3D11Device* device, ID3D11DeviceContext *context, int width, int height, int textureIndirectLightWidth, int textureIndirectLightHeight);
-		bool initShaders		(ID3D11Device* device, ID3D11DeviceContext *context);
+		
 
 		void renderSolidObjects(
 			ID3D11DeviceContext* context, NScene::Scene &scene,
@@ -184,13 +184,17 @@ namespace NGraphic {
 
 		std::map<KEnum, std::shared_ptr<RenderTexture>>	m_renderTextures;
 		std::map<KEnum, std::shared_ptr<DepthTexture>>	m_depthTextures;
-		std::map<int, DepthTexture*>					m_lightDepthTextures;
 		std::map<int, ReflectiveShadowMap>				m_RSM;
 
 		std::map<int, Shader*> shaders;
 		// Width and hieght is for the resolution in wihich this graphic main will adjust to render things onto
 		GraphicMain();
-		bool init(ID3D11Device *device, ID3D11DeviceContext *context, int textureWidth, int textureHeight, int textureIndirectLightWidth, int textureIndirectLightHeight);
+		bool init(
+			ID3D11Device *device, ID3D11DeviceContext *context, 
+			ID3D11RenderTargetView* backBufferRTV,
+			ID3D11DepthStencilView* backBufferDepth,
+			D3D11_VIEWPORT backBufferViewPort,
+			int textureWidth, int textureHeight, int textureIndirectLightWidth, int textureIndirectLightHeight);
 		void render(ID3D11Device * device , ID3D11DeviceContext* context,  Asset* asset, NScene::Scene scene);
 	};
 }

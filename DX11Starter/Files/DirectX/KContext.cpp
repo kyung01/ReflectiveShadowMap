@@ -65,7 +65,9 @@ void KContext::Init()
 		NGame::LoadExample00(it->gameContext);
 
 
-		if (!it->main.init(this->device, this->context, this->width,this->height, 256,256)) {
+		if (!it->main.init(this->device, this->context, 
+			this->backBufferRTV,this->backBufferDepth,this->backBufferViewPort,
+			this->width,this->height, 256,256)) {
 			std::cout << "GraphicMain failed to init" << std::endl;
 		}
 		it->scene.loadExample00();
@@ -165,13 +167,13 @@ void KContext::Draw(float deltaTime, float totalTime)
 	// Background color (Cornflower Blue in this case) for clearing
 	const float color[4] = {0.4f, 0.6f, 0.75f, 0.0f};
 
-	context->OMSetRenderTargets(1, &this->backBufferRTV, depthStencilView);
+	context->OMSetRenderTargets(1, &this->backBufferRTV, backBufferDepth);
 	// Clear the render target and depth buffer (erases what's on the screen)
 	//  - Do this ONCE PER FRAME
 	//  - At the beginning of Draw (before drawing *anything*)
 	context->ClearRenderTargetView(backBufferRTV, color);
 	context->ClearDepthStencilView(
-		depthStencilView, 
+		backBufferDepth, 
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
 		1.0f,
 		0);
@@ -186,7 +188,7 @@ void KContext::Draw(float deltaTime, float totalTime)
 	for (auto it = m_renderContexts.begin(); it != m_renderContexts.end(); it++) {
 		it->main.render(this->device, this->context,&m_asset, it->scene);
 	}
-	context->OMSetRenderTargets(1,&this-> backBufferRTV, depthStencilView);
+	context->OMSetRenderTargets(1,&this-> backBufferRTV, backBufferDepth);
 	m_ui.render();
 	swapChain->Present(0, 0);
 }

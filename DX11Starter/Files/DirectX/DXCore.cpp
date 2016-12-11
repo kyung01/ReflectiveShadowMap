@@ -59,7 +59,7 @@ DXCore::DXCore(
 	context = 0;
 	swapChain = 0;
 	backBufferRTV = 0;
-	depthStencilView = 0;
+	backBufferDepth = 0;
 
 	// Query performance counter for accurate timing information
 	__int64 perfFreq;
@@ -74,7 +74,7 @@ DXCore::DXCore(
 DXCore::~DXCore()
 {
 	// Release all DirectX resources
-	if (depthStencilView) { depthStencilView->Release(); }
+	if (backBufferDepth) { backBufferDepth->Release(); }
 	if (backBufferRTV) { backBufferRTV->Release();}
 
 	if (swapChain) { swapChain->Release();}
@@ -251,12 +251,12 @@ HRESULT DXCore::InitDirectX()
 	// release our reference to the texture
 	ID3D11Texture2D* depthBufferTexture;
 	device->CreateTexture2D(&depthStencilDesc, 0, &depthBufferTexture);
-	device->CreateDepthStencilView(depthBufferTexture, 0, &depthStencilView);
+	device->CreateDepthStencilView(depthBufferTexture, 0, &backBufferDepth);
 	depthBufferTexture->Release();
 	
 	// Bind the views to the pipeline, so rendering properly 
 	// uses their underlying textures
-	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
+	context->OMSetRenderTargets(1, &backBufferRTV, backBufferDepth);
 
 	// Lastly, set up a viewport so we render into
 	// to correct portion of the window
@@ -284,7 +284,7 @@ HRESULT DXCore::InitDirectX()
 void DXCore::OnResize()
 {
 	// Release existing DirectX views and buffers
-	if (depthStencilView) { depthStencilView->Release(); }
+	if (backBufferDepth) { backBufferDepth->Release(); }
 	if (backBufferRTV) { backBufferRTV->Release(); }
 
 	// Resize the underlying swap chain buffers
@@ -320,12 +320,12 @@ void DXCore::OnResize()
 	// release our reference to the texture
 	ID3D11Texture2D* depthBufferTexture;
 	device->CreateTexture2D(&depthStencilDesc, 0, &depthBufferTexture);
-	device->CreateDepthStencilView(depthBufferTexture, 0, &depthStencilView);
+	device->CreateDepthStencilView(depthBufferTexture, 0, &backBufferDepth);
 	depthBufferTexture->Release();
 
 	// Bind the views to the pipeline, so rendering properly 
 	// uses their underlying textures
-	context->OMSetRenderTargets(1, &backBufferRTV, depthStencilView);
+	context->OMSetRenderTargets(1, &backBufferRTV, backBufferDepth);
 
 	// Lastly, set up a viewport so we render into
 	// to correct portion of the window
@@ -336,6 +336,7 @@ void DXCore::OnResize()
 	viewport.Height = (float)height;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
+	backBufferViewPort = viewport;
 	context->RSSetViewports(1, &viewport);
 }
 

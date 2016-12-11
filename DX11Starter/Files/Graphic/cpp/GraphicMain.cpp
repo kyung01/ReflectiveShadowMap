@@ -31,6 +31,29 @@ void GraphicMain::rendering(NScene::Scene scene)
 
 	
 }
+void GraphicMain::initBlendState(ID3D11Device *device) {
+	D3D11_BLEND_DESC noBlack = {};
+	noBlack.RenderTarget[0].BlendEnable = true;
+	noBlack.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	noBlack.RenderTarget[0].DestBlend = D3D11_BLEND_DEST_ALPHA;
+	noBlack.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	noBlack.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;//D3D11_BLEND_ZERO
+	noBlack.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;//D3D11_BLEND_ZERO
+	noBlack.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	noBlack.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	device->CreateBlendState(&noBlack, &m_blendStateNoBlack);
+
+	D3D11_BLEND_DESC transparent = {};
+	transparent.RenderTarget[0].BlendEnable = true;
+	transparent.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	transparent.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	transparent.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	transparent.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;//D3D11_BLEND_ZERO
+	transparent.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;//D3D11_BLEND_ZERO
+	transparent.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	transparent.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	device->CreateBlendState(&transparent, &m_blendStateTransparent);
+}
 bool GraphicMain::initTextures(ID3D11Device * device, ID3D11DeviceContext * context,
 	int width, int height,
 	int textureIndirectLightWidth, int textureIndirectLightHeight)
@@ -65,48 +88,25 @@ this->m_renderTextures[key]	->Initialize(device, defWidth, defHeight);
 
 	return true;
 }
-bool GraphicMain::initShaders(ID3D11Device* device, ID3D11DeviceContext *context) {
-	
 
-
-	return true;
-
-}
 GraphicMain::GraphicMain()
 {
 }
-bool GraphicMain::init(ID3D11Device *device, ID3D11DeviceContext *context, int width, int height, int textureIndirectLightWidth, int textureIndirectLightHeight)
+bool GraphicMain::init(
+	ID3D11Device *device, ID3D11DeviceContext *context, 
+	ID3D11RenderTargetView* backBufferRTV,
+	ID3D11DepthStencilView* backBufferDepth,
+	D3D11_VIEWPORT backBufferViewPort,
+	int width, int height, int textureIndirectLightWidth, int textureIndirectLightHeight)
 {
 	this->m_width = width;
 	this->m_height = height;
 	m_rsm_flux_eye_perspective_width = textureIndirectLightWidth;
 	m_rsm_flux_eye_perspective_height = textureIndirectLightHeight;
 
-	if (!initShaders(device, context)||
-		!initTextures(device,context,width,height, textureIndirectLightWidth, textureIndirectLightHeight)
-		
-		) return false;
-	D3D11_BLEND_DESC noBlack = {};
-	noBlack.RenderTarget[0].BlendEnable = true;
-	noBlack.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	noBlack.RenderTarget[0].DestBlend = D3D11_BLEND_DEST_ALPHA;
-	noBlack.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	noBlack.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;//D3D11_BLEND_ZERO
-	noBlack.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;//D3D11_BLEND_ZERO
-	noBlack.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	noBlack.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	device->CreateBlendState(&noBlack, &m_blendStateNoBlack);
-
-	D3D11_BLEND_DESC transparent = {};
-	transparent.RenderTarget[0].BlendEnable = true;
-	transparent.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	transparent.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	transparent.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	transparent.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;//D3D11_BLEND_ZERO
-	transparent.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;//D3D11_BLEND_ZERO
-	transparent.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	transparent.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	device->CreateBlendState(&transparent, &m_blendStateTransparent);
+	if (!initTextures(device,context,width,height, textureIndirectLightWidth, textureIndirectLightHeight)) 
+		return false;
+	initBlendState(device);
 	return true;
 }
 

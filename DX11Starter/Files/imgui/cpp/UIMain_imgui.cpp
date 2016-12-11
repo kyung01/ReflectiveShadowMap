@@ -89,7 +89,7 @@ void NImGui::UIMain::render()
 
 	render(graphicMain->m_renderTextures);
 	render(graphicMain->m_depthTextures);
-	render(graphicMain->m_lightDepthTextures);
+	//render(graphicMain->m_lightDepthTextures);
 	render(graphicMain->m_RSM);
 	/*
 	ImGui::Begin("Other window", 0, ImGuiWindowFlags_ShowBorders);

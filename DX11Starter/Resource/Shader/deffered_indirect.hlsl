@@ -46,7 +46,7 @@ float3 getFluxColor(
 		* max(0, dot(lightNormal, posWorld - lightPosWorld ))
 		)/ pow(disMag,2);
 	return lightFlux*result *(1 
-		+specularPower(dirEyeToWorld,normalize(0.000001 + posWorld - lightPosWorld), normal, specular )
+		+specularPower(dirEyeToWorld,normalize( posWorld - lightPosWorld), normal, specular )
 		) ;// / (1 + disMag);
 
 }
