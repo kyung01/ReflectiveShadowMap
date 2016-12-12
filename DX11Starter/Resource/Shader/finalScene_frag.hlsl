@@ -18,6 +18,7 @@ struct VertexToPixel
 
 float4 main(VertexToPixel input) : SV_TARGET
 {
-	float4 color = textureDirectLight.Sample(samplerDefault, input.uv) + textureIndirectLight.Sample(samplerDefault, input.uv);
+	float4 color = textureDirectLight.Sample(samplerDefault, input.uv) 
+	+ textureIndirectLight.Sample(samplerDefault, input.uv);
 	return float4(saturate(color.xyz), 1);
 }

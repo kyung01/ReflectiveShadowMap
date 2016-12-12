@@ -105,7 +105,7 @@ namespace NGraphic {
 			//RenderTexture& target, DepthTexture& targetDepth,
 			RenderTexture& targetIndirectLight, DepthTexture& targetIndirectDepth,
 			RenderTexture& textureDiffuse, RenderTexture& textureNormal, RenderTexture & textureSpecular,
-			DepthTexture& textureDepth, DepthTexture& textureLightIndirectDpeth,
+			DepthTexture& textureDepth,
 			std::map<KEnum, std::unique_ptr<Mesh*>> &meshes, std::map<KEnum, ID3D11ShaderResourceView*> &textures,
 			ID3D11SamplerState * samplerDefault, ID3D11SamplerState * samplerLightDepth, ID3D11SamplerState * samplerLightRSM
 		);
@@ -120,7 +120,7 @@ namespace NGraphic {
 			RenderTexture& targetIndirectLight, DepthTexture& targetIndirectDepth,
 			RenderTexture & textureError, RenderTexture & textureDirectLight,
 			RenderTexture& textureDiffuse, RenderTexture& textureNormal, RenderTexture & textureSpecular,
-			DepthTexture& textureDepth, DepthTexture& textureLightIndirectDpeth,
+			DepthTexture& textureDepth,
 			std::map<KEnum, std::unique_ptr<Mesh*>> &meshes, std::map<KEnum, ID3D11ShaderResourceView*> &textures,
 			ID3D11SamplerState * samplerDefault, ID3D11SamplerState * samplerLightDepth, ID3D11SamplerState * samplerLightRSM, ID3D11SamplerState * samplerError
 		);
@@ -150,7 +150,9 @@ namespace NGraphic {
 
 			RenderTexture& target, RenderTexture & targetIndirectLightError, DepthTexture& targetDepth,
 			RenderTexture & textureDirectLight, RenderTexture & textureIndirectLight,
-			RenderTexture& textureNormal, RenderTexture&textureSpecular, DepthTexture& textureDepth,
+			RenderTexture& textureNormal,
+			RenderTexture& textureNormalHighQuality, 
+			RenderTexture&textureSpecular, DepthTexture& textureDepth,
 			std::unique_ptr<Mesh*> &meshePlane,
 			ID3D11SamplerState * samplerDefault,
 			ID3D11SamplerState * samplerLinear,

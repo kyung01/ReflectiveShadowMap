@@ -12,6 +12,7 @@ Texture2D textureNormal		: register(t1);
 Texture2D textureSpecular	: register(t2);
 Texture2D textureDepth		: register(t3);
 Texture2D textureLightDirect : register(t4);
+Texture2D textureNormalHighQuality		: register(t5);
 
 
 SamplerState samplerDefault	: register(s0);
@@ -104,18 +105,22 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 
 
 		float2 uvRelative = float2(
-			smaplingPositions[i].x + PIXEL_DISTANCE*0.5,
-			smaplingPositions[i].y + PIXEL_DISTANCE*0.5
+			smaplingPositions[i].x,// +PIXEL_DISTANCE*0.5,
+			smaplingPositions[i].y// + PIXEL_DISTANCE*0.5
 			);
 		//float2 uvRelative = float2(smaplingPositions[i].x, smaplingPositions[i].y
 		//	);
 		
 		//
-		float4 otherPosWorld = getPosWorld(uvRelative, textureDepth, matProjViewInverse, samplerPoint);
-		float3 otherNormal = normalize(textureNormal.Sample(samplerPoint, uvRelative).xyz * 2 - 1);
+		float4 otherPosWorld = getPosWorld(uvRelative, textureDepth, matProjViewInverse, samplerDefault);
+		float3 otherNormal = normalize(textureNormal.Sample(samplerDefault, uvRelative).xyz * 2 - 1);
+		float normalError = dot(otherNormal, normalize(textureNormalHighQuality.Sample(samplerDefault, uvRelative).xyz * 2 - 1));
 		////posDiffTotal += length(otherPosWorld.xyz - posWorld.xyz);
 		float posDiff = 1 / (1+length(otherPosWorld.xyz - posWorld.xyz));
-		if (dot(meNormal, otherNormal) < 0.97 || length(otherPosWorld.xyz - posWorld.xyz) > 1.0) {
+		if (
+			dot(meNormal, otherNormal) < 0.80 
+			|| length(otherPosWorld.xyz - posWorld.xyz) > 1.0 
+			|| normalError < 0.98 ) {
 			indexs[i] = -1;
 			failCount++;
 		}

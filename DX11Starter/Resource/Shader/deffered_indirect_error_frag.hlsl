@@ -21,7 +21,7 @@ Texture2D textureLightRSM		: register(t6);
 Texture2D textureLightDepth		: register(t7);
 
 SamplerState samplerDefault	: register(s0);
-SamplerState samplerError	: register(s1);
+SamplerState samplerPoint	: register(s1);
 SamplerState samplerLightRSM	: register(s2);
 // Struct representing a single vertex worth of data
 
@@ -36,8 +36,8 @@ struct VertexToPixel
 
 float4 main(VertexToPixel input) : SV_TARGET
 {
-	float isError  = textureError.Sample(samplerError, input.uv).x;
-	if (isError  == 0.0) return float4(0, 0, 0, 0);
+	float isError  = textureError.Sample(samplerPoint, input.uv).x;
+	if (isError  != 1.0) return float4(0, 0, 0, 0);
 	float specular = textureSpecular.Sample(samplerDefault, input.uv).x;
 	float3 normal = normalize(textureNormal.Sample(samplerDefault, input.uv) * 2 - 1);
 
@@ -52,9 +52,9 @@ float4 main(VertexToPixel input) : SV_TARGET
 
 
 	return float4(
-		IndirectLightingIntense(posWorld, normal, dirEyeToWorld, uv, specular,
+		IndirectLighting(posWorld, normal, dirEyeToWorld, uv, specular,
 			textureLightNormal, textureLightRSM, textureLightDepth,
 			matLightProjViewInverse,
 			samplerDefault, samplerLightRSM)
-		, 1) *saturate(isError);
+		, 1);
 }
