@@ -42,7 +42,7 @@ namespace NGraphic {
 
 	class GraphicMain {
 	private:
-		int m_rsm_flux_eye_perspective_width, m_rsm_flux_eye_perspective_height;
+		int m_lightTextureWidth, m_lightTextureHeight;
 		
 		void rendering(NScene::Scene scene);
 		void processObject(NScene::Object obj);
@@ -72,7 +72,7 @@ namespace NGraphic {
 			ID3D11SamplerState * sampler
 
 		);
-		void renderUI(
+		void renderUI(ID3D11Device * device,
 			ID3D11DeviceContext* context, NScene::Scene &scene,
 			SimpleVertexShader& shader_vert, SimpleFragmentShader& shader_frag,
 			RenderTexture& texture_final, DepthTexture& textureDepth,
@@ -140,11 +140,12 @@ namespace NGraphic {
 			SimpleVertexShader& shaderVert, SimpleFragmentShader& shaderFrag,
 
 			RenderTexture & directLight,
-			RenderTexture& indirectLight, 
+			RenderTexture& indirectLight,
+			RenderTexture& ui,
 			std::unique_ptr<Mesh*> &meshePlane,
 			ID3D11SamplerState * samplerDefault
 		);
-		void renderApplyDirectAndIndirectLights(
+		void renderApplyIndirectLightScene(
 			ID3D11Device* device, ID3D11DeviceContext* context, NScene::Scene & scene,
 			SimpleVertexShader& shaderVert, SimpleFragmentShader& shaderFrag,
 
@@ -152,7 +153,9 @@ namespace NGraphic {
 			RenderTexture & textureDirectLight, RenderTexture & textureIndirectLight,
 			RenderTexture& textureNormal,
 			RenderTexture& textureNormalHighQuality, 
-			RenderTexture&textureSpecular, DepthTexture& textureDepth,
+			RenderTexture&textureSpecular,
+			DepthTexture& textureDepth,
+			DepthTexture& textureDepthHighQuality,
 			std::unique_ptr<Mesh*> &meshePlane,
 			ID3D11SamplerState * samplerDefault,
 			ID3D11SamplerState * samplerLinear,
@@ -200,6 +203,6 @@ namespace NGraphic {
 		void renderToScreen(ID3D11Device * device, ID3D11DeviceContext* context, Asset* asset,
 			ID3D11RenderTargetView* backBufferRTV,
 			ID3D11DepthStencilView* backBufferDepth,
-			D3D11_VIEWPORT backBufferViewPort);
+			D3D11_VIEWPORT& backBufferViewPort);
 	};
 }

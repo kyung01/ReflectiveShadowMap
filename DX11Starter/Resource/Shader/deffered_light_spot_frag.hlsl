@@ -45,7 +45,7 @@ float4 main(VertexToPixel input) : SV_TARGET
 		0.0, 0.5, 0.0, 0.0,
 		0.0, 0.0, 0.5, 0.0,
 		0.5, 0.5, 0.5, 1.0);
-	float bias = 0.00000000000010;
+	float bias = 0.000200000000010;
 	//values I can get from textures
 	float3 diffuse = textureDiffuse.Sample(samplerDefault, input.uv);
 	float specular = textureSpecular.Sample(samplerDefault, input.uv).x;

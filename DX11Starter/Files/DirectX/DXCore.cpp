@@ -260,14 +260,14 @@ HRESULT DXCore::InitDirectX()
 
 	// Lastly, set up a viewport so we render into
 	// to correct portion of the window
-	D3D11_VIEWPORT viewport = {};
-	viewport.TopLeftX	= 0;
-	viewport.TopLeftY	= 0;
-	viewport.Width		= (float)width;
-	viewport.Height		= (float)height;
-	viewport.MinDepth	= 0.0f;
-	viewport.MaxDepth	= 1.0f;
-	context->RSSetViewports(1, &viewport);
+	backBufferViewPort = {};
+	backBufferViewPort.TopLeftX	= 0;
+	backBufferViewPort.TopLeftY	= 0;
+	backBufferViewPort.Width		= (float)width;
+	backBufferViewPort.Height		= (float)height;
+	backBufferViewPort.MinDepth	= 0.0f;
+	backBufferViewPort.MaxDepth	= 1.0f;
+	context->RSSetViewports(1, &backBufferViewPort);
 
 	// Return the "everything is ok" HRESULT value
 	return S_OK;
@@ -329,15 +329,14 @@ void DXCore::OnResize()
 
 	// Lastly, set up a viewport so we render into
 	// to correct portion of the window
-	D3D11_VIEWPORT viewport = {};
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.Width = (float)width;
-	viewport.Height = (float)height;
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-	backBufferViewPort = viewport;
-	context->RSSetViewports(1, &viewport);
+	backBufferViewPort = {};
+	backBufferViewPort.TopLeftX = 0;
+	backBufferViewPort.TopLeftY = 0;
+	backBufferViewPort.Width = (float)width;
+	backBufferViewPort.Height = (float)height;
+	backBufferViewPort.MinDepth = 0.0f;
+	backBufferViewPort.MaxDepth = 1.0f;
+	context->RSSetViewports(1, &backBufferViewPort);
 }
 
 

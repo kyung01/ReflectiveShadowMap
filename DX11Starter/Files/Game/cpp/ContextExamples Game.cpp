@@ -3,7 +3,23 @@
 #include <Game\Script\X_Axis_Rotate.h>
 using namespace NGame;
 
-void NGame::LoadExample00(Context &context)
+Entity* NGame::getLightEntity(NGraphic::NScene::Scene &scene, float r, float g, float b, float power)
+{
+
+	auto objLight = scene.getObjLight();
+	auto objUI = scene.getObjUI();
+	objUI->m_meshId = NGraphic::MESH_ID_SPHERE;
+	objUI->setScale(Vector3(0.1, 0.1, 0.1));// = NGraphic::MESH_ID_SPHERE;
+	objUI->m_textures[NGraphic::TEXTURE_TYPE_DEFAULT] = NGraphic::KEnum::TEXTURE_ID_WHITE;
+	auto kEntity = new Entity();
+	objLight->m_lightColor = Vector4(1.0, 1.0, 1.0, 30);
+	kEntity->m_graphicObjects.push_back(objLight);
+	kEntity->m_graphicObjects.push_back(objUI);
+
+	return kEntity;
+}
+
+void NGame::LoadExample00(NGame::Context &context)
 {
 	auto ground = new Entity(); 
 	
@@ -72,7 +88,7 @@ void NGame::LoadExample00(Context &context)
 	
 	{
 		distance = 6;
-		angle =0;
+		angle = 0;
 		auto obj = context.m_scene->getObjSolid();
 		obj.get()->m_meshId = NGraphic::MESH_ID_CUBE;
 		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_NORMAL] = NGraphic::KEnum::TEXTURE_ID_NORMAL_DEFAULT;// normalIds[i % 6];
@@ -81,7 +97,19 @@ void NGame::LoadExample00(Context &context)
 		auto e = new Entity();
 		context.addEntity(std::shared_ptr<Entity>(e));
 		e->m_graphicObjects.push_back(obj);
-		e->setPos(5+cos(angle)*distance, 0.3, sin(angle)*distance);
+		e->setPos(5 + cos(angle)*distance, 0.3, sin(angle)*distance);
+	}
+	{
+		distance = 3;
+		angle = 0;
+		auto obj = context.m_scene->getObjUI();
+		obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
+		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DEFAULT] = NGraphic::KEnum::TEXTURE_ID_ICN_LIGHT;
+		obj.get()->setScale(Vector3(1, 1, 1));
+		auto e = new NGame::Entity();
+		context.addEntity(std::shared_ptr<NGame::Entity>(e));
+		e->m_graphicObjects.push_back(obj);
+		e->setPos(5 + cos(angle)*distance, 0.3, sin(angle)*distance);
 	}
 
 	distance = 5;
@@ -98,14 +126,13 @@ void NGame::LoadExample00(Context &context)
 		e->setPos(cos(angle)*distance, 0.25, sin(angle)*distance);
 	}
 	{
-		auto obj = context.m_scene->getObjLight();
-		auto light = new Entity();
-		context.addEntity(std::shared_ptr<Entity>(light));
-		obj->m_lightColor = Vector4(1.0, 1.0, 1.0, 30);
-		light->m_graphicObjects.push_back(obj);
-		light->setPos(0, 3.5, 0);
-		light->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14*0.25f));
-		light->addScript(context, std::shared_ptr<Script>(new NScript::Y_Axis_Rotate()));
+		auto entityLight = getLightEntity(*context.m_scene, 1.0,1.0,1.0,30);
+		context.addEntity(std::shared_ptr<Entity>(entityLight));
+
+		
+		entityLight->setPos(0, 3.5, 0);
+		entityLight->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14*0.25f));
+		entityLight->addScript(context, std::shared_ptr<Script>(new NScript::Y_Axis_Rotate()));
 	}
 	{
 		//auto obj = context.m_scene->getObjLight();

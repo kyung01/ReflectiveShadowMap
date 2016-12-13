@@ -195,9 +195,10 @@ void KContext::Draw(float deltaTime, float totalTime)
 	
 	for (auto it = m_renderContexts.begin(); it != m_renderContexts.end(); it++) {
 		it->main.render(this->device, this->context, &m_asset, it->scene);
-		it->main.renderToScreen(this->device, this->context, &m_asset,backBufferRTV,backBufferDepth,backBufferViewPort);
+		it->main.renderToScreen(this->device, this->context, &m_asset, backBufferRTV,backBufferDepth,backBufferViewPort);
 	}
 	context->OMSetRenderTargets(1,&this-> backBufferRTV, backBufferDepth);
+	context->RSSetViewports(1, &backBufferViewPort);
 	m_ui.render();
 	swapChain->Present(0, 0);
 }

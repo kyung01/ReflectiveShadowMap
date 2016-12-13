@@ -3,6 +3,7 @@
 // Constant Buffer for external (C++) data
 cbuffer global00 :register(b0)
 {
+	float PIXEL_DISTANCE;// = 1.0 / 256.0;
 	float3 lightPos;
 	matrix matProjViewInverse; //used to unwrap depth to world
 };
@@ -13,6 +14,7 @@ Texture2D textureSpecular	: register(t2);
 Texture2D textureDepth		: register(t3);
 Texture2D textureLightDirect : register(t4);
 Texture2D textureNormalHighQuality		: register(t5);
+Texture2D textureDepthHighQuality		: register(t6);
 
 
 SamplerState samplerDefault	: register(s0);
@@ -33,7 +35,6 @@ struct PS_OUTPUT
 
 
 
-static float PIXEL_DISTANCE = 1.0/ 256.0;
 float getArea(float2 vertA, float2 vertB, float2 vertC) {
 	float2 sideA = vertB - vertA;
 	float2 sideB = vertC - vertB;
@@ -64,6 +65,16 @@ float4 barycentric(float2 uv, float3 colors[4],float2 uvs[4], int checks[4]) {
 	float3 colorC = colors[2] * (areaC / total);
 	return float4(colorA + colorB + colorC, 1);
 }
+bool isNormalCorrect(float3 otherNormal, float2 uvRelative) {
+	float normalError = dot(otherNormal, normalize(textureNormalHighQuality.Sample(samplerDefault, uvRelative).xyz * 2 - 1));
+	
+	return normalError > 0.98;
+}
+bool isPosWorldCorrect(float3 otherPosWorld, float2 uvRelative) {
+	float3 posErrorDis = otherPosWorld.xyz - getPosWorld(uvRelative, textureDepthHighQuality, matProjViewInverse, samplerDefault).xyz;
+	float posError = posErrorDis.x*posErrorDis.x + posErrorDis.y* posErrorDis.y + posErrorDis.z* posErrorDis.z;
+	return posError < 0.1;
+}
 PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 {
 	PS_OUTPUT output;
@@ -71,9 +82,16 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 	output.error = float4(0, 1.0, 0, 1.0);
 	float diffMaxLimit = 2.0;
 	float normalRaw = textureNormal.Sample(samplerDefault, input.uv).w;
-	float3 colorDirect = textureLightDirect.Sample(samplerDefault, input.uv).xyz *0;
+	float3 colorDirect = textureLightDirect.Sample(samplerDefault, input.uv).xyz * 0;
 	float4 posWorld = getPosWorld(input.uv, textureDepth, matProjViewInverse, samplerDefault);
 	float3 meNormal = normalize(textureNormal.Sample(samplerDefault, input.uv).xyz * 2 - 1);
+	if (  !isPosWorldCorrect(posWorld.xyz, input.uv )
+		||!isNormalCorrect(meNormal,input.uv) )
+	{
+		output.error = float4(1, 0, 0, 1);
+		return output;
+	}
+
 	float specular = textureSpecular.Sample(samplerDefault, input.uv).x;
 	float4 posEye = mul(float4(0, 0, 0, 1), matProjViewInverse);
 	posEye /= 0.00000001 + posEye.w;
@@ -113,14 +131,17 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 		
 		//
 		float4 otherPosWorld = getPosWorld(uvRelative, textureDepth, matProjViewInverse, samplerDefault);
+		//float3 posErrorDis = otherPosWorld.xyz - getPosWorld(uvRelative, textureDepthHighQuality, matProjViewInverse, samplerDefault).xyz;
+		//float posError = posErrorDis.x*posErrorDis.x + posErrorDis.y* posErrorDis.y + posErrorDis.z* posErrorDis.z;
 		float3 otherNormal = normalize(textureNormal.Sample(samplerDefault, uvRelative).xyz * 2 - 1);
-		float normalError = dot(otherNormal, normalize(textureNormalHighQuality.Sample(samplerDefault, uvRelative).xyz * 2 - 1));
+		//float normalError = dot(otherNormal, normalize(textureNormalHighQuality.Sample(samplerDefault, uvRelative).xyz * 2 - 1));
 		////posDiffTotal += length(otherPosWorld.xyz - posWorld.xyz);
-		float posDiff = 1 / (1+length(otherPosWorld.xyz - posWorld.xyz));
+		//float posDiff = 1 / (1+length(otherPosWorld.xyz - posWorld.xyz));
 		if (
 			dot(meNormal, otherNormal) < 0.80 
 			|| length(otherPosWorld.xyz - posWorld.xyz) > 1.0 
-			|| normalError < 0.98 ) {
+			|| !isNormalCorrect(otherNormal, uvRelative)
+			|| !isPosWorldCorrect(otherPosWorld.xyz, uvRelative)) {
 			indexs[i] = -1;
 			failCount++;
 		}

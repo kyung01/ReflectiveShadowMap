@@ -72,7 +72,7 @@ void NImGui::UIMain::render()
 	//ImGui::ShowTestWindow();
 
 	ImGui::BeginMainMenuBar();
-	if (ImGui::BeginMenu("File"))
+	if (ImGui::BeginMenu("Load Scenes"))
 	{
 		if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
 		//ShowExampleMenuFile();
@@ -85,12 +85,29 @@ void NImGui::UIMain::render()
 		ImGui::Separator();
 		ImGui::EndMenu();
 	}
+
+
 	ImGui::EndMainMenuBar();
 
 	render(graphicMain->m_renderTextures);
 	render(graphicMain->m_depthTextures);
 	//render(graphicMain->m_lightDepthTextures);
 	render(graphicMain->m_RSM);
+	ImGui::Begin("SceneSelector", 0, 0);
+	ImGui::Text("BestScenarios");
+	for (int i = 0; i < 7; i++)
+	{
+		if (i > 0) ImGui::SameLine();
+		ImGui::PushID(i);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(i / 7.0f, 0.6f, 0.6f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(i / 7.0f, 0.7f, 0.7f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(i / 7.0f, 0.8f, 0.8f));
+		ImGui::Button("Click");
+		ImGui::PopStyleColor(3);
+		ImGui::PopID();
+	}
+	ImGui::End();
+
 	/*
 	ImGui::Begin("Other window", 0, ImGuiWindowFlags_ShowBorders);
 	
@@ -135,6 +152,6 @@ void NImGui::UIMain::render()
 	ImGui::End();
 	*/
 
-	//ImGui::ShowTestWindow();
+	ImGui::ShowTestWindow();
 	ImGui::Text("hiworld");
 }

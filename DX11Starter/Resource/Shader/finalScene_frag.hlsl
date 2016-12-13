@@ -4,6 +4,7 @@
 
 Texture2D textureDirectLight	: register(t0);
 Texture2D textureIndirectLight		: register(t1);
+Texture2D textureUI		: register(t2);
 
 SamplerState samplerDefault	: register(s0);
 
@@ -18,7 +19,9 @@ struct VertexToPixel
 
 float4 main(VertexToPixel input) : SV_TARGET
 {
-	float4 color = textureDirectLight.Sample(samplerDefault, input.uv) 
-	+ textureIndirectLight.Sample(samplerDefault, input.uv);
-	return float4(saturate(color.xyz), 1);
+	float4 colorUI = textureUI.Sample(samplerDefault, input.uv);
+	float4 color = 
+		textureDirectLight.Sample(samplerDefault, input.uv) 
+		+ textureIndirectLight.Sample(samplerDefault, input.uv);
+	return float4(saturate(color.xyz * (1 - colorUI.w) + colorUI.xyz * colorUI.w), 1);
 }
