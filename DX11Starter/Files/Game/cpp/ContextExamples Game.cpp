@@ -65,14 +65,15 @@ void NGame::LoadExample00(NGame::Context &context)
 	for (int i = 0; i < 6; i++) {
 		angle = 3.14 / 6 * i;
 		auto obj = context.m_scene->getObjSolid();
-		obj.get()->m_meshId = NGraphic::MESH_ID_SPHERE;
+		obj.get()->m_meshId = NGraphic::MESH_ID_BUNNY;
 		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_NORMAL] = NGraphic::KEnum::TEXTURE_ID_NORMAL_DEFAULT;// normalIds[i % 6];
+		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_NORMAL] = normalIds[i % 6];
 		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_SPECULAR] = reflectiveIds[i % 4];
-		obj.get()->setScale(Vector3(0.5, 0.5, 0.5));
+		obj.get()->setScale(Vector3(5.5, 5.5, 5.5));
 		auto e = new Entity();
 		context.addEntity(std::shared_ptr<Entity>(e));
 		e->m_graphicObjects.push_back(obj);
-		e->setPos(cos(angle)*distance, 0.15, sin(angle)*distance);
+		e->setPos(cos(angle)*distance, 0.4, sin(angle)*distance);
 	}
 	distance = 13;
 	for (int i = 0; i < 7; i++) {

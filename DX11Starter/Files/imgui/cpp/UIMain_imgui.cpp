@@ -75,9 +75,29 @@ void NImGui::UIMain::render()
 	if (ImGui::BeginMenu("Load"))
 	{
 		ImGui::Text("Please select different options in order to load different example scenes");
-		if (ImGui::MenuItem("Rabbit", "Best case, smooth surfaces with less number of objects in a scene")) {
-		
+		if (ImGui::MenuItem("Smooth", "Best case, smooth surfaces with less number of objects in a scene")) {
+
 		}
+		if (ImGui::MenuItem("Rough", "Increased performance requirement. Rough normals")) {
+
+		}
+		if (ImGui::MenuItem("Smooth vs Rough", "Take a look at both of them to compare")) {
+
+		}
+		if (ImGui::MenuItem("Multiple Objects", "The imperfect nature of reflective shadowmap is more visible. Increasing sampling can reduce the artifacts.")) {
+
+		}
+		if (ImGui::MenuItem("Walls", "Reflective Shadowmap doesn't consider obstacles blocking ray's path")) {
+
+		}
+		if (ImGui::MenuItem("Moving Light Source", "Due to the sampling pattern, there is spot where it lightens brighter than the other parts. Better sampling pattern can reduce artifacts.")) {
+
+		}
+		if (ImGui::MenuItem("Crazy", "Go crazy.")) {
+
+		}
+
+
 		//ShowExampleMenuFile();
 		ImGui::EndMenu();
 	}
