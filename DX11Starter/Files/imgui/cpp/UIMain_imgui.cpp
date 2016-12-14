@@ -72,9 +72,12 @@ void NImGui::UIMain::render()
 	//ImGui::ShowTestWindow();
 
 	ImGui::BeginMainMenuBar();
-	if (ImGui::BeginMenu("Load Scenes"))
+	if (ImGui::BeginMenu("Load"))
 	{
-		if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+		ImGui::Text("Please select different options in order to load different example scenes");
+		if (ImGui::MenuItem("Rabbit", "Best case, smooth surfaces with less number of objects in a scene")) {
+		
+		}
 		//ShowExampleMenuFile();
 		ImGui::EndMenu();
 	}
