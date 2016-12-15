@@ -19,6 +19,7 @@ namespace NImGui{
 			ID3D11RenderTargetView*  g_mainRenderTargetView);
 		void renderSub() override;
 		
+		
 	};
 
 }

@@ -73,6 +73,11 @@ void KContext::Init()
 	}
 	m_ui.init(hInstance, hWnd, device, context, swapChain, backBufferRTV);
 	m_ui.m_uiMain.init(&m_renderContexts.begin()->main);//TODO delete this line
+
+	m_ui.m_uiMain.gameContext = &m_renderContexts.begin()->gameContext;
+	m_ui.m_uiMain.graphicContext = &m_renderContexts.begin()->main;
+
+
 	m_asset.init(device, context);
 	world.objs.push_back(World::Object());
 	world.objs.push_back(World::Object());
@@ -135,12 +140,13 @@ void KContext::Update(float deltaTime, float totalTime)
 	for (auto it = m_renderContexts.begin(); it != m_renderContexts.end(); it++) {
 		it->gameContext.update(deltaTime);
 	}
+	m_ui.m_uiMain.update();
 	// Quit if the escape key is pressed
 	if (GetAsyncKeyState(VK_ESCAPE))
 		Quit();
 
 
-	float x, y, speed(.5f* deltaTime), dis_camerMove(10.3f*deltaTime);
+	float x, y,  dis_camerMove(2.3f*deltaTime);
 	int count = 0;
 	
 	XMVECTOR dir;
@@ -236,7 +242,7 @@ void KContext::OnMouseUp(WPARAM buttonState, int x, int y)
 int mouseMoveXY[2] = {-1,-1};
 void KContext::OnMouseMove(WPARAM buttonState, int x, int y)
 {
-	float power = .010;
+	float power = .002;
 	bool isContinue = true;
 	auto &cam = m_renderContexts.begin()->scene.m_camMain;
 	int xDis = x - mouseMoveXY[0];
@@ -247,7 +253,7 @@ void KContext::OnMouseMove(WPARAM buttonState, int x, int y)
 	mouseMoveXY[0] = x;
 	mouseMoveXY[1] = y;
 	if (!isContinue)return;
-	if (xDis*xDis + yDis*yDis > 100) return;
+	if (xDis*xDis + yDis*yDis > 500) return;
 	
 	cam.setRotation(cam.m_rotation * Quaternion::CreateFromAxisAngle(Vector3(0, 1, 0), xDis*power));
 	//	+ Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), yDis*power));

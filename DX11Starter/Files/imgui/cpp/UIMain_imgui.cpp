@@ -1,5 +1,6 @@
 #include "imgui\DirectX\UIMain.h"
 #include "imgui\imgui.h"
+#include <Game\ContextExamples.h>
 using namespace NImGui;
 using namespace NGraphic;
 
@@ -65,44 +66,57 @@ void NImGui::UIMain::render(std::map<int, ReflectiveShadowMap> textures)
 	}
 	ImGui::End();
 }
+void NImGui::UIMain::update() {
+	if (levelSelected != -1) {
+		gameContext->clear();
+		switch (levelSelected) {
+		default:
+		case 0:
+		case 1:
+			NGame::LoadExample01(*gameContext);
+			break;
+		}
+	}
+}
 void NImGui::UIMain::render()
 {
 	if (!graphicMain) return; // I don't have a pointer to the instance needed to initate drawing cycle
 
 	//ImGui::ShowTestWindow();
-
+	levelSelected = -1;
 	ImGui::BeginMainMenuBar();
 	if (ImGui::BeginMenu("Load"))
 	{
 		ImGui::Text("Please select different options in order to load different example scenes");
 		
 		if (ImGui::MenuItem("Smooth", "Best case, smooth surfaces with less number of objects in a scene")) {
-
+			levelSelected = 0;
 		}
 		ImGui::Text("However due to the fact that I am over-rendering high quality pixels at certain pixels\n(because low resolution reflective map is insufficient for detailed areas), you can see tiny stripe patterns");
 		if (ImGui::MenuItem("Rough", "Increased performance requirement. Rough normals")) {
-
+			levelSelected = 1;
 		}
 		if (ImGui::MenuItem("Smooth vs Rough", "Take a look at both of them to compare")) {
-
+			levelSelected = 2;
 		}
 		if (ImGui::MenuItem("Multiple Objects", "The imperfect nature of reflective shadowmap is more visible. Increasing sampling can reduce the artifacts.")) {
-
+			levelSelected = 3;
 		}
 		if (ImGui::MenuItem("Walls", "Reflective Shadowmap doesn't consider obstacles blocking ray's path")) {
-
+			levelSelected = 4;
 		}
 		if (ImGui::MenuItem("Moving Light Source", "Due to the sampling pattern, there is spot where it lightens brighter than the other parts. Better sampling pattern can reduce artifacts.")) {
-
+			levelSelected = 5;
 		}
 		if (ImGui::MenuItem("Crazy", "Go crazy.")) {
-
+			levelSelected = 6;
 		}
 
 
 		//ShowExampleMenuFile();
 		ImGui::EndMenu();
 	}
+	render(graphicMain->m_RSM);
 
 	if (ImGui::BeginMenu("Edit"))
 	{
@@ -113,7 +127,7 @@ void NImGui::UIMain::render()
 
 
 	ImGui::EndMainMenuBar();
-
+	
 }
 /*
 

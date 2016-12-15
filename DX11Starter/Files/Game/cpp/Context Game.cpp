@@ -17,3 +17,10 @@ void Context::init(NGraphic::NScene::Scene * scene)
 void Context::addEntity(std::shared_ptr<Entity> entity) {
 	m_entities.push_back(entity);
 }
+
+void NGame::Context::clear()
+{
+	std::cout << "NGAME CLEARED\n";
+	m_scene->clear();
+	//m_entities.clear();
+}

@@ -147,3 +147,10 @@ std::shared_ptr<Light> NGraphic::NScene::Scene::getObjLight()
 	objs_lights.push_back(obj);
 	return obj;
 }
+
+void NGraphic::NScene::Scene::clear()
+{
+	objs_solid.clear();
+	objs_ui.clear();
+	objs_lights.clear();
+}
