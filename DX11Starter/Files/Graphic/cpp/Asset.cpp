@@ -67,6 +67,9 @@ std::list<LoadInfoShader> Asset::getLoadListShaderFrag()
 std::list<LoadInfoTexture> Asset::getLoadListTexture()
 {
 	std::list<LoadInfoTexture> lst({
+		{ TEXTURE_ID_GREEN,		L"Resource/Texture/texture_green.png" },
+		{ TEXTURE_ID_RED,		L"Resource/Texture/texture_red.png" },
+		{ TEXTURE_ID_BLUE,		L"Resource/Texture/texture_blue.png" },
 		{ TEXTURE_ID_DEFAULT,		L"Resource/Texture/textureTest00.jpg" },
 		{ TEXTURE_ID_NORMAL_DEFAULT,	L"Resource/Texture/normal_default.jpg" },
 		{ TEXTURE_ID_NORMAL_DIRT,		L"Resource/Texture/normal_dirt.jpg" },

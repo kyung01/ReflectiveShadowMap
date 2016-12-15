@@ -117,6 +117,7 @@ void NImGui::UIMain::render()
 		ImGui::EndMenu();
 	}
 	render(graphicMain->m_RSM);
+	render(graphicMain->m_renderTextures);
 
 	if (ImGui::BeginMenu("Edit"))
 	{

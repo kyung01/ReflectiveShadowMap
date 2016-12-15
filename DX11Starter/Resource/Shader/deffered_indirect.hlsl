@@ -77,7 +77,7 @@ float3 IndirectLighting(float3 posWorld, float3 normal, float3 dirEyeToWorld, fl
 
 		}
 	}
-	return saturate(fluxColor*2);
+	return saturate(fluxColor)*.3;
 	
 	
 }
@@ -109,7 +109,7 @@ float3 IndirectLightingIntense(float3 posWorld, float3 normal, float3 dirEyeToWo
 
 		}
 	}
-	return saturate(fluxColor * 2);
+	return saturate(fluxColor )*0.3;
 
 
 }

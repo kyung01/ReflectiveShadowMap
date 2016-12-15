@@ -20,8 +20,8 @@ struct VertexToPixel
 float4 main(VertexToPixel input) : SV_TARGET
 {
 	float4 colorUI = textureUI.Sample(samplerDefault, input.uv);
-	float4 color = 
-		textureDirectLight.Sample(samplerDefault, input.uv) 
+	float4 color =
+		textureDirectLight.Sample(samplerDefault, input.uv)
 		+ textureIndirectLight.Sample(samplerDefault, input.uv);
 	return float4(saturate(color.xyz * (1 - colorUI.w) + colorUI.xyz * colorUI.w), 1);
 }
