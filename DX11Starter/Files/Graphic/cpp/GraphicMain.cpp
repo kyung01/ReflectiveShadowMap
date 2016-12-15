@@ -988,21 +988,21 @@ void GraphicMain::render(ID3D11Device * device, ID3D11DeviceContext *context, As
 		asset->m_samplers[SAMPLER_ID_CLAMP], asset->m_samplers[SAMPLER_ID_BORDER_ONE], asset->m_samplers[SAMPLER_ID_BORDER_ZERO]
 	);
 
-	renderIndirectTextureBlur(device, context, scene,
-		*asset->m_shadersVert[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR], *asset->m_shadersFrag[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR],
-		*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR], *m_depthTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR],
-		*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT],
-		*m_renderTextures[RENDER_TYPE_DEFFERED_NORMAL], *m_renderTextures[RENDER_TYPE_DEFFERED_SPECULAR], *m_depthTextures[RENDER_TYPE_DEFFERED],
-		asset->m_meshes[KEnum::MESH_ID_PLANE], asset->m_samplers[SAMPLER_ID_CLAMP], asset->m_samplers[SAMPLER_ID_BORDER_ZERO]
-	);
-	
-	renderIndirectTextureBlur(device, context, scene,
-		*asset->m_shadersVert[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR_VERTICALLY], *asset->m_shadersFrag[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR_VERTICALLY],
-		*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT], *m_depthTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT],
-		*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR],
-		*m_renderTextures[RENDER_TYPE_DEFFERED_NORMAL], *m_renderTextures[RENDER_TYPE_DEFFERED_SPECULAR], *m_depthTextures[RENDER_TYPE_DEFFERED],
-		asset->m_meshes[KEnum::MESH_ID_PLANE], asset->m_samplers[SAMPLER_ID_CLAMP], asset->m_samplers[SAMPLER_ID_BORDER_ZERO]
-	);
+	//renderIndirectTextureBlur(device, context, scene,
+	//	*asset->m_shadersVert[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR], *asset->m_shadersFrag[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR],
+	//	*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR], *m_depthTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR],
+	//	*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT],
+	//	*m_renderTextures[RENDER_TYPE_DEFFERED_NORMAL], *m_renderTextures[RENDER_TYPE_DEFFERED_SPECULAR], *m_depthTextures[RENDER_TYPE_DEFFERED],
+	//	asset->m_meshes[KEnum::MESH_ID_PLANE], asset->m_samplers[SAMPLER_ID_CLAMP], asset->m_samplers[SAMPLER_ID_BORDER_ZERO]
+	//);
+	//
+	//renderIndirectTextureBlur(device, context, scene,
+	//	*asset->m_shadersVert[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR_VERTICALLY], *asset->m_shadersFrag[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR_VERTICALLY],
+	//	*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT], *m_depthTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT],
+	//	*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_BLUR],
+	//	*m_renderTextures[RENDER_TYPE_DEFFERED_NORMAL], *m_renderTextures[RENDER_TYPE_DEFFERED_SPECULAR], *m_depthTextures[RENDER_TYPE_DEFFERED],
+	//	asset->m_meshes[KEnum::MESH_ID_PLANE], asset->m_samplers[SAMPLER_ID_CLAMP], asset->m_samplers[SAMPLER_ID_BORDER_ZERO]
+	//);
 	
 	#define quickLoopRender(target, targetDepth, shaderFrag, textureBlurred)\
 		{	target->SetRenderTarget(context, targetDepth->getDepthStencilView()); \

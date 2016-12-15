@@ -73,7 +73,7 @@ bool isNormalCorrect(float3 otherNormal, float2 uvRelative) {
 bool isPosWorldCorrect(float3 otherPosWorld, float2 uvRelative) {
 	float3 posErrorDis = otherPosWorld.xyz - getPosWorld(uvRelative, textureDepthHighQuality, matProjViewInverse, samplerDefault).xyz;
 	float posError = posErrorDis.x*posErrorDis.x + posErrorDis.y* posErrorDis.y + posErrorDis.z* posErrorDis.z;
-	return posError < 0.1;
+	return posError < 1.0;
 }
 PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 {
@@ -126,6 +126,10 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 			smaplingPositions[i].x,// +PIXEL_DISTANCE*0.5,
 			smaplingPositions[i].y// + PIXEL_DISTANCE*0.5
 			);
+		float2 uvRelativeError = float2(
+			smaplingPositions[i].x +PIXEL_DISTANCE*0.5,
+			smaplingPositions[i].y + PIXEL_DISTANCE*0.5
+			);
 		//float2 uvRelative = float2(smaplingPositions[i].x, smaplingPositions[i].y
 		//	);
 		
@@ -138,10 +142,10 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 		////posDiffTotal += length(otherPosWorld.xyz - posWorld.xyz);
 		//float posDiff = 1 / (1+length(otherPosWorld.xyz - posWorld.xyz));
 		if (
-			dot(meNormal, otherNormal) < 0.80 
-			|| length(otherPosWorld.xyz - posWorld.xyz) > 1.0 
-			|| !isNormalCorrect(otherNormal, uvRelative)
-			|| !isPosWorldCorrect(otherPosWorld.xyz, uvRelative)) {
+			dot(meNormal, otherNormal) < 0.98 
+			|| length(otherPosWorld.xyz - posWorld.xyz) > .5 
+			|| !isNormalCorrect(otherNormal, uvRelativeError)
+			|| !isPosWorldCorrect(otherPosWorld.xyz, uvRelativeError)) {
 			indexs[i] = -1;
 			failCount++;
 		}
@@ -176,15 +180,15 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 		output.color = float4(saturate(colorIndirect + saturate(colorDirect)), 1);
 		//return float4(saturate(colorIndirect + saturate(colorDirect)), 1);
 	}
-	else if (failCount == 1) {
-		//return float4(1, 0, 0, 1);
-		float4 color = barycentric(input.uv, sampledColors, smaplingPositions, indexs);
-		output.color = float4(saturate(colorDirect + color.xyz *color.w), 1);
-		//if (color.z == 0)
-		//	output.color = float4(1, 0, 0, 1);
-		output.error = float4(color.w, 0, 1-color.w, 1.0);
-
-	}
+	//else if (failCount == 1) {
+	//	//return float4(1, 0, 0, 1);
+	//	float4 color = barycentric(input.uv, sampledColors, smaplingPositions, indexs);
+	//	output.color = float4(saturate(colorDirect + color.xyz *color.w), 1);
+	//	//if (color.z == 0)
+	//	//	output.color = float4(1, 0, 0, 1);
+	//	output.error = float4(color.w, 0, 1-color.w, 1.0);
+	//
+	//}
 	else {
 		output.color = float4(colorDirect, 1);
 		output.error = float4(1.0, 0, 0, 1.0);
