@@ -186,17 +186,17 @@ void NGame::LoadExample00(NGame::Context &context)
 	}
 	{
 		//up
-		auto obj = context.m_scene->getObjSolid();
-		obj->setScale(Vector3(scale, scale, scale));
-		obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
-		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
-		//ground->m_graphicObjects.push_back(obj);
-		//ground->setPos(-25, 0, -25);
-		auto e = new Entity();
-		e->m_graphicObjects.push_back(obj);
-		e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
-		e->setPos(0, d + d / 2, 0);
-		context.addEntity(std::shared_ptr<Entity>(e));
+		//auto obj = context.m_scene->getObjSolid();
+		//obj->setScale(Vector3(scale, scale, scale));
+		//obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
+		//obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
+		////ground->m_graphicObjects.push_back(obj);
+		////ground->setPos(-25, 0, -25);
+		//auto e = new Entity();
+		//e->m_graphicObjects.push_back(obj);
+		//e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
+		//e->setPos(0, d + d / 2, 0);
+		//context.addEntity(std::shared_ptr<Entity>(e));
 
 	}
 	{
@@ -306,17 +306,17 @@ void NGame::LoadExample01(NGame::Context &context)
 	}
 	{
 		//up
-		auto obj = context.m_scene->getObjSolid();
-		obj->setScale(Vector3(scale, scale, scale));
-		obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
-		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
-		//ground->m_graphicObjects.push_back(obj);
-		//ground->setPos(-25, 0, -25);
-		auto e = new Entity();
-		e->m_graphicObjects.push_back(obj);
-		e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
-		e->setPos(0, d + d / 2, 0);
-		context.addEntity(std::shared_ptr<Entity>(e));
+		//auto obj = context.m_scene->getObjSolid();
+		//obj->setScale(Vector3(scale, scale, scale));
+		//obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
+		//obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
+		////ground->m_graphicObjects.push_back(obj);
+		////ground->setPos(-25, 0, -25);
+		//auto e = new Entity();
+		//e->m_graphicObjects.push_back(obj);
+		//e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
+		//e->setPos(0, d + d / 2, 0);
+		//context.addEntity(std::shared_ptr<Entity>(e));
 
 	}
 	{
@@ -427,17 +427,17 @@ void NGame::LoadExample02(NGame::Context &context)
 	}
 	{
 		//up
-		auto obj = context.m_scene->getObjSolid();
-		obj->setScale(Vector3(scale, scale, scale));
-		obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
-		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
-		//ground->m_graphicObjects.push_back(obj);
-		//ground->setPos(-25, 0, -25);
-		auto e = new Entity();
-		e->m_graphicObjects.push_back(obj);
-		e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
-		e->setPos(0, d + d / 2, 0);
-		context.addEntity(std::shared_ptr<Entity>(e));
+		//auto obj = context.m_scene->getObjSolid();
+		//obj->setScale(Vector3(scale, scale, scale));
+		//obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
+		//obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
+		////ground->m_graphicObjects.push_back(obj);
+		////ground->setPos(-25, 0, -25);
+		//auto e = new Entity();
+		//e->m_graphicObjects.push_back(obj);
+		//e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
+		//e->setPos(0, d + d / 2, 0);
+		//context.addEntity(std::shared_ptr<Entity>(e));
 
 	}
 	{
@@ -548,17 +548,17 @@ void NGame::LoadExample03(NGame::Context &context)
 	}
 	{
 		//up
-		auto obj = context.m_scene->getObjSolid();
-		obj->setScale(Vector3(scale, scale, scale));
-		obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
-		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
-		//ground->m_graphicObjects.push_back(obj);
-		//ground->setPos(-25, 0, -25);
-		auto e = new Entity();
-		e->m_graphicObjects.push_back(obj);
-		e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
-		e->setPos(0, d + d / 2, 0);
-		context.addEntity(std::shared_ptr<Entity>(e));
+		//auto obj = context.m_scene->getObjSolid();
+		//obj->setScale(Vector3(scale, scale, scale));
+		//obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
+		//obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
+		////ground->m_graphicObjects.push_back(obj);
+		////ground->setPos(-25, 0, -25);
+		//auto e = new Entity();
+		//e->m_graphicObjects.push_back(obj);
+		//e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
+		//e->setPos(0, d + d / 2, 0);
+		//context.addEntity(std::shared_ptr<Entity>(e));
 
 	}
 	{
@@ -755,17 +755,17 @@ void NGame::LoadExample04(NGame::Context &context)
 	}
 	{
 		//up
-		auto obj = context.m_scene->getObjSolid();
-		obj->setScale(Vector3(scale, scale, scale));
-		obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
-		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
-		//ground->m_graphicObjects.push_back(obj);
-		//ground->setPos(-25, 0, -25);
-		auto e = new Entity();
-		e->m_graphicObjects.push_back(obj);
-		e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
-		e->setPos(0, d + d / 2, 0);
-		context.addEntity(std::shared_ptr<Entity>(e));
+		//auto obj = context.m_scene->getObjSolid();
+		//obj->setScale(Vector3(scale, scale, scale));
+		//obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
+		//obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
+		////ground->m_graphicObjects.push_back(obj);
+		////ground->setPos(-25, 0, -25);
+		//auto e = new Entity();
+		//e->m_graphicObjects.push_back(obj);
+		//e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
+		//e->setPos(0, d + d / 2, 0);
+		//context.addEntity(std::shared_ptr<Entity>(e));
 
 	}
 	{
@@ -848,17 +848,17 @@ void NGame::LoadExample05(NGame::Context &context)
 	}
 	{
 		//up
-		auto obj = context.m_scene->getObjSolid();
-		obj->setScale(Vector3(scale, scale, scale));
-		obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
-		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
-		//ground->m_graphicObjects.push_back(obj);
-		//ground->setPos(-25, 0, -25);
-		auto e = new Entity();
-		e->m_graphicObjects.push_back(obj);
-		e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
-		e->setPos(0, d + d / 2, 0);
-		context.addEntity(std::shared_ptr<Entity>(e));
+		//auto obj = context.m_scene->getObjSolid();
+		//obj->setScale(Vector3(scale, scale, scale));
+		//obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
+		//obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
+		////ground->m_graphicObjects.push_back(obj);
+		////ground->setPos(-25, 0, -25);
+		//auto e = new Entity();
+		//e->m_graphicObjects.push_back(obj);
+		//e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
+		//e->setPos(0, d + d / 2, 0);
+		//context.addEntity(std::shared_ptr<Entity>(e));
 
 	}
 	{
@@ -969,17 +969,17 @@ void NGame::LoadExample06(NGame::Context &context)
 	}
 	{
 		//up
-		auto obj = context.m_scene->getObjSolid();
-		obj->setScale(Vector3(scale, scale, scale));
-		obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
-		obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
-		//ground->m_graphicObjects.push_back(obj);
-		//ground->setPos(-25, 0, -25);
-		auto e = new Entity();
-		e->m_graphicObjects.push_back(obj);
-		e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
-		e->setPos(0, d + d / 2, 0);
-		context.addEntity(std::shared_ptr<Entity>(e));
+		//auto obj = context.m_scene->getObjSolid();
+		//obj->setScale(Vector3(scale, scale, scale));
+		//obj.get()->m_meshId = NGraphic::MESH_ID_PLANE;
+		//obj.get()->m_textures[NGraphic::TEXTURE_TYPE_DIFFUSE] = NGraphic::TEXTURE_ID_WHITE;
+		////ground->m_graphicObjects.push_back(obj);
+		////ground->setPos(-25, 0, -25);
+		//auto e = new Entity();
+		//e->m_graphicObjects.push_back(obj);
+		//e->setRotation(Quaternion::CreateFromAxisAngle(Vector3(1, 0, 0), 3.14 * -0.5));
+		//e->setPos(0, d + d / 2, 0);
+		//context.addEntity(std::shared_ptr<Entity>(e));
 
 	}
 	{

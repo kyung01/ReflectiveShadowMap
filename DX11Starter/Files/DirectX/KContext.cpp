@@ -69,7 +69,6 @@ void KContext::Init()
 			this->width,this->height, 256,256)) {
 			std::cout << "GraphicMain failed to init" << std::endl;
 		}
-		it->scene.loadExample00();
 	}
 	m_ui.init(hInstance, hWnd, device, context, swapChain, backBufferRTV);
 	m_ui.m_uiMain.init(&m_renderContexts.begin()->main);//TODO delete this line

@@ -17,7 +17,6 @@ namespace NGraphic {
 			Scene();
 			Scene(float x, float y, float z);
 			void addObject(std::shared_ptr<Object> obj);
-			void loadExample00();
 
 			std::shared_ptr<Object> getObjSolid();
 			std::shared_ptr<Object> getObjUI();
