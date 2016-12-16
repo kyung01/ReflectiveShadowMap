@@ -131,6 +131,7 @@
     <ClCompile Include="Files\Game\cpp\Context Game.cpp" />
     <ClCompile Include="Files\Game\cpp\Entity Game.cpp" />
     <ClCompile Include="Files\Game\cpp\Script Game.cpp" />
+    <ClCompile Include="Files\Game\Script\FlyingLightSource.cpp" />
     <ClCompile Include="Files\Game\Script\X_Axis_Rotate.cpp" />
     <ClCompile Include="Files\Game\Script\Y_Axis_Rotate.cpp" />
     <ClCompile Include="Files\Graphic\cpp\Asset.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Files\Game\Entity.h" />
     <ClInclude Include="Files\Game\Context.h" />
     <ClInclude Include="Files\Game\Script.h" />
+    <ClInclude Include="Files\Game\Script\FlyingLightSource.h" />
     <ClInclude Include="Files\Game\Script\X_Axis_Rotate.h" />
     <ClInclude Include="Files\Game\Script\Y_Axis_Rotate.h" />
     <ClInclude Include="Files\Graphic\Asset\Asset.h" />

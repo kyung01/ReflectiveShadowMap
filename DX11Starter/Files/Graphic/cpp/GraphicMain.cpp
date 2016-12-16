@@ -747,9 +747,14 @@ void NGraphic::GraphicMain::renderFinalScene(
 	shaderFrag.SetMatrix4x4("matProjViewInverse", projection);
 
 
+
+
+	shaderFrag.SetFloat("isDisplayFailedPixels", displayFailedPixel);
 	shaderFrag.SetShaderResourceView("textureDirectLight", directLight.getShaderResourceView());
 	shaderFrag.SetShaderResourceView("textureIndirectLight", indirectLight.getShaderResourceView());
 	shaderFrag.SetShaderResourceView("textureUI", ui.getShaderResourceView());
+
+	shaderFrag.SetShaderResourceView("textureFailedPixels",(*m_renderTextures[RENDER_TYPE_DEFFERED_LIGHT_INDIRECT_ERROR]).getShaderResourceView());
 
 	shaderFrag.SetSamplerState("samplerDefault", samplerDefault);
 

@@ -142,7 +142,7 @@ PS_OUTPUT main(VertexToPixel input) : SV_TARGET
 		////posDiffTotal += length(otherPosWorld.xyz - posWorld.xyz);
 		//float posDiff = 1 / (1+length(otherPosWorld.xyz - posWorld.xyz));
 		if (
-			dot(meNormal, otherNormal) < 0.98 
+			dot(meNormal, otherNormal) < 0.90
 			|| length(otherPosWorld.xyz - posWorld.xyz) > .5 
 			|| !isNormalCorrect(otherNormal, uvRelativeError)
 			|| !isPosWorldCorrect(otherPosWorld.xyz, uvRelativeError)) {

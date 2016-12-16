@@ -69,15 +69,31 @@ void NImGui::UIMain::render(std::map<int, ReflectiveShadowMap> textures)
 void NImGui::UIMain::update() {
 	if (levelSelected != -1) {
 		gameContext->clear();
+		graphicMain->m_RSM.clear();
 		switch (levelSelected) {
 		default:
 		case 0:
+			NGame::LoadExample00(*gameContext);break;
 		case 1:
-			NGame::LoadExample01(*gameContext);
-			break;
+			NGame::LoadExample01(*gameContext);break;
+
+		case 2:
+			NGame::LoadExample02(*gameContext);	break;
+		case 3:
+			NGame::LoadExample03(*gameContext);	break;
+		case 4:
+			NGame::LoadExample04(*gameContext);	break;
+		case 5:
+			NGame::LoadExample05(*gameContext);	break;
+		case 6:
+			NGame::LoadExample06(*gameContext);	break;
+		//case 3:
+		//	NGame::LoadExample03(*gameContext);break;
 		}
 	}
 }
+
+static bool display_failed_pixels = false;
 void NImGui::UIMain::render()
 {
 	if (!graphicMain) return; // I don't have a pointer to the instance needed to initate drawing cycle
@@ -85,30 +101,45 @@ void NImGui::UIMain::render()
 	//ImGui::ShowTestWindow();
 	levelSelected = -1;
 	ImGui::BeginMainMenuBar();
-	if (ImGui::BeginMenu("Load"))
+	if (display_failed_pixels)
+		graphicMain->displayFailedPixel = 1;
+	else
+		graphicMain->displayFailedPixel = 0;
+	if (ImGui::BeginMenu("Menu"))
 	{
-		ImGui::Text("Please select different options in order to load different example scenes");
-		
-		if (ImGui::MenuItem("Smooth", "Best case, smooth surfaces with less number of objects in a scene")) {
+
+		ImGui::Text("Check below checkbox in order to dispaly failed pixels");
+		ImGui::Text("More these failed pixels, more expansive the rendering process gets");
+		ImGui::Checkbox("Display Failed Pixels", &display_failed_pixels);// ImGui::SameLine(150);
+
+		ImGui::Text("Best case, smooth surfaces with less number of objects in a scene");
+		ImGui::Text("However due to the over-rendering high quality pixels at certain pixels");
+		ImGui::Text("(because low resolution reflective map is insufficient for detailed areas)");
+		ImGui::Text("you can see tiny stripe patterns");
+		if (ImGui::MenuItem("1", "Rabbit with smooth surfaces")) {
 			levelSelected = 0;
 		}
-		ImGui::Text("However due to the fact that I am over-rendering high quality pixels at certain pixels\n(because low resolution reflective map is insufficient for detailed areas), you can see tiny stripe patterns");
-		if (ImGui::MenuItem("Rough", "Increased performance requirement. Rough normals")) {
+		if (ImGui::MenuItem("2", "Sphere with smooth surfaces")) {
 			levelSelected = 1;
 		}
-		if (ImGui::MenuItem("Smooth vs Rough", "Take a look at both of them to compare")) {
+		ImGui::Text("Rough Surfaces require more power to render the scene");
+		if (ImGui::MenuItem("1", "Rabbit with rough surfaces")) {
 			levelSelected = 2;
 		}
-		if (ImGui::MenuItem("Multiple Objects", "The imperfect nature of reflective shadowmap is more visible. Increasing sampling can reduce the artifacts.")) {
+		if (ImGui::MenuItem("2", "Sphere with rough surfaces")) {
 			levelSelected = 3;
 		}
+		ImGui::Text("Flaws");
+
 		if (ImGui::MenuItem("Walls", "Reflective Shadowmap doesn't consider obstacles blocking ray's path")) {
 			levelSelected = 4;
 		}
-		if (ImGui::MenuItem("Moving Light Source", "Due to the sampling pattern, there is spot where it lightens brighter than the other parts. Better sampling pattern can reduce artifacts.")) {
+		ImGui::Text("In the following examples you can see artifacts due to sampling pattern");
+		ImGui::Text("Post processing and better sampling pattern can help with these artifacts");
+		if (ImGui::MenuItem("Moving Light Source", "")) {
 			levelSelected = 5;
 		}
-		if (ImGui::MenuItem("Crazy", "Go crazy.")) {
+		if (ImGui::MenuItem("Moving Object", "")) {
 			levelSelected = 6;
 		}
 
@@ -116,15 +147,8 @@ void NImGui::UIMain::render()
 		//ShowExampleMenuFile();
 		ImGui::EndMenu();
 	}
-	render(graphicMain->m_RSM);
-	render(graphicMain->m_renderTextures);
-
-	if (ImGui::BeginMenu("Edit"))
-	{
-		if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-		ImGui::Separator();
-		ImGui::EndMenu();
-	}
+	//render(graphicMain->m_RSM);
+	//render(graphicMain->m_renderTextures);
 
 
 	ImGui::EndMainMenuBar();

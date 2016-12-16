@@ -41,6 +41,8 @@ namespace NGraphic {
 	};
 
 	class GraphicMain {
+	public:
+		float displayFailedPixel = 1;
 	private:
 		int m_lightTextureWidth, m_lightTextureHeight;
 		

@@ -108,6 +108,9 @@
     <ClCompile Include="Files\Game\Script\X_Axis_Rotate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Files\Game\Script\FlyingLightSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -228,6 +231,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Files\Game\Script\X_Axis_Rotate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Files\Game\Script\FlyingLightSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
